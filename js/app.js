@@ -1,13 +1,17 @@
+function makeProductLayout (image, description) {
+	var productContainer = $("<div>").addClass("col-md-3");
 
-var productContainer = $("<div>").addClass("col-md-3");
+	var productImage = $("<img>").attr("src",image);
 
-var productImage = $("<img>").attr("src","http://placehold.it/200/200");
+	var productDescription = $("<p>");
+	productDescription.html(description);
 
-var productDescription = $("<p>");
+	var productLikeButton = $("<a>").addClass("btn btn-primary");
+	var productBuyButton = $("<a>").addClass("btn btn-info");
 
-var productLikeButton = $("<a>").addClass("btn btn-primary");
-var productBuyButton = $("<a>").addClass("btn btn-info");
+	productContainer.append(productImage, productDescription, productLikeButton, productBuyButton);
 
-productContainer.append(productImage, productDescription, productLikeButton, productBuyButton);
+	return productContainer;
+}
 
-$("#productRow").append(productContainer);
+
