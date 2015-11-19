@@ -21,12 +21,43 @@
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript" src="data.json"></script>
 	<script type="text/javascript">
-		//make normal products
-		for (var i = 0; i < products.length; i++) {
-			$("#productRow").append(makeProductLayout(products[i].image, products[i].description));
-		};
+	// make an API call
+	$.ajax({
+		url: "http://www.omdbapi.com/?",
+		data: {
+			"s" : "The Wizard Of Oz"
+		},
+		success: makeMovies
+	});
+
+	function makeMovies (data) {
+		if (data.Search) {
+			//make movie products
+			for (var i = 0; i < data.Search.length; i++) {
+				
+				if (isImageUrl(data.Search[i].Poster)) {
+					var posterImg = data.Search[i].Poster;
+				} else {
+					var posterImg = "http://placehold.it/200/200";
+				}
+				console.log(posterImg)
+				var product = {
+					image : posterImg,
+					description : data.Search[i].Title + " (" + data.Search[i].Year + ")"
+				}
+
+				$("#productRow").append(makeProductLayout(product.image, product.description));
+			};
+		}
+	}
+		
+	function isImageUrl (str) {
+		if (str.slice(-4) === ".jpg") {
+			return true
+		}
+		return false;
+	}
 	</script>
 </body>
 </html>
